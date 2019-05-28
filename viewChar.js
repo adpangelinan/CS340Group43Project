@@ -42,6 +42,7 @@ module.exports = function(){
     router.get('/:id', function (req, res) {
         callbackCount = 0;
         var context = {};
+        context.jsscripts = ["updateChar.js"];
         var mysql = req.app.get('mysql');
         getCharsForUpdate(res, mysql, context, req.params.id, complete);
         //Add get Location here
