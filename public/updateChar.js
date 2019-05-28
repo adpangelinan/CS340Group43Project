@@ -2,7 +2,7 @@ function updatePerson(id) {
     $.ajax({
         url: '/viewChar/' + id,
         type: 'PUT',
-        data: $('#update-person').serialize(),
+        data: $('#update-character').serialize(),
         success: function (result) {
             window.location.replace("./");
         }
