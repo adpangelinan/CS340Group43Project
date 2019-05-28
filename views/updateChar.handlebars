@@ -1,16 +1,16 @@
 <html>
-  <h1>Update {{People.FName}} {{People.LName}}:</h1>
+  <h1>Update {{people.FName}} {{people.LName}}:</h1>
   <form id="update-character" action="/people" method="post">
-      First name: <input type="text" name="FName" value="{{People.FName}}"><br>
-      Last name: <input type="text" name="LName" value="{{People.LName}}"><br>
-      Alias: <input type="text" name="Alias" value="{{People.Alias}}"><br>
-      Race: <input type="text" name="Race" value="{{People.Race}}"><br>
+      First name: <input type="text" name="FName" value="{{people.FName}}"><br>
+      Last name: <input type="text" name="LName" value="{{people.LName}}"><br>
+      Alias: <input type="text" name="Alias" value="{{people.Alias}}"><br>
+      Race: <input type="text" name="Race" value="{{people.Race}}"><br>
       Homeworld: <select name="HomeWorld" id="planet-selector">
           {{#each planets}}
           <option value="{{id}}">{{name}}</option>
           {{/each}}
       </select><br>
   </form>
-  <button onclick="updatePerson({{People.id}})">Update</button>
-  <script defer>selectPlanet({{People.homeworld}});</script>
+  <button onclick="updateChar({{people.id}})">Update</button>
+  <script defer>selectPlanet({{people.homeworld}});</script>
 </html>
