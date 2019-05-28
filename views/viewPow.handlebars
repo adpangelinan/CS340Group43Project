@@ -1,0 +1,29 @@
+<table>
+    <thead> 
+        <th>ID</th>
+        <th>Name</th> 
+        <th>Category</th>  
+    </thead> 
+    <tbody>
+        {{#each power}} 
+        <tr> 
+            <td>{{ID}}</td>
+            <td>{{Name}}</td> 
+            <td>{{Category}}</td> 
+            <td><button onclick="deletePerson({{id}})">Delete</button></td>
+            <td><a href="/people/{{id}}">Update</a></td>
+        </tr> 
+        {{/each}} 
+    </tbody> 
+</table> 
+<h4>Add a Power:</h4>
+<form id="addpow" action="/viewPow" method="post">
+    Name: <input type="text" name="Name"><br>
+    Category: <select type="text" name="Category">
+        <option>Mental</option>
+        <option>Physical</option>
+        <option>Supernatural</option>
+    </select><br>
+    
+    <input type="submit" value="Submit">
+ </form>

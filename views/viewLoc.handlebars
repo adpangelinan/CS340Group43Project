@@ -1,0 +1,29 @@
+<h4>Current Locations:</h4>
+<table>
+    <thead> 
+        <th>ID</th>
+        <th>Name</th> 
+        <th>City</th> 
+        <th>Region</th>
+        <th>Planet</th>
+    </thead> 
+    <tbody>
+        {{#each location}} 
+        <tr> 
+            <td>{{ID}}</td>
+            <td>{{Name}}</td> 
+            <td>{{City}}</td>
+            <td>{{Region}}</td> 
+            <td>{{Planet}}</td> 
+        </tr> 
+        {{/each}} 
+    </tbody> 
+</table> 
+<h4>Add a Location:</h4>
+<form id="addloc" action="/viewLoc" method="post">
+    Name: <input type="text" name="Name"><br>
+    City: <input type="text" name="City"><br>
+    Region: <input type="text" name="Region"><br>
+    Planet: <input type="text" name="Planet"><br>
+    <input type="submit" value="Submit">
+ </form>

@@ -1,0 +1,32 @@
+<table>
+    <thead> 
+        <th>Name</th>
+        <th>Power</th>  
+    </thead> 
+    <tbody>
+        {{#each people}} 
+        <tr> 
+            <td>{{Name}}</td>
+            <td>{{Power}}</td>
+            <td><button onclick="deletePerson({{ID}})">Delete</button></td>
+            <td><a href="/people/{{ID}}">Update</a></td>
+        </tr> 
+        {{/each}} 
+    </tbody> 
+</table> 
+<h4>Add a Power:</h4>
+<form id="addpow" action="/addPow" method="post">
+    Name: <select type="text" name="Name">
+        {{#each People}}
+        <option value={{PID}}>{{Name}}</option>
+        {{/each}}
+        </select><br>
+
+    Power: <select type="text" name="Power">
+        {{#each People}}
+        <option value={{PoID}}>{{Power}}</option>
+        {{/each}}
+    </select><br>
+    
+    <input type="submit" value="Submit">
+ </form>
