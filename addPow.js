@@ -12,12 +12,15 @@ module.exports = function(){
                     rows[a].Name = rows[a].FName + " " + rows[a].LName;
                 }
                 context.people = rows;
+                context.pep = rows;
+                context.peop = rows;
+                console.log(rows);
                 res.render('addPow',context);
             }
         });
     }
     router.get('/', function(req,res){
-        getInfo(req,res)
+        getInfo(req,res);
     });
     router.post('/', function(req, res){
         console.log(req.body);
@@ -35,4 +38,4 @@ module.exports = function(){
         });
     });
     return router;
-}
+}();
