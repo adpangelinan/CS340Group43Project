@@ -12,7 +12,7 @@ module.exports = function(){
             } else {
                 context.people = rows;
                 for (var a=0;a<rows.length;a++){
-                    console.log(rows[a]);
+                    //console.log(rows[a]);
                 }
                 res.render('viewChar',context);
                 }
@@ -28,7 +28,19 @@ module.exports = function(){
                 console.log(err);
             } else {
                 context.people = results[0];
-                console.log(results[0]);
+                //console.log(results[0]);
+                complete();
+            }
+        });
+    }
+
+    function getLocs(res,mysql,context,id,complete){
+        var sql = "SELECT Locations.ID AS id, name FROM Locations";
+        mysql.pool.query(sql,function(err,rows){
+            if (err){
+                console.log(err);
+            } else {
+                context.locations = rows;
                 complete();
             }
         });
@@ -45,10 +57,10 @@ module.exports = function(){
         context.jsscripts = ["updateChar.js"];
         var mysql = req.app.get('mysql');
         getCharsForUpdate(res, mysql, context, req.params.id, complete);
-        //Add get Location here
+        getLocs(res, mysql, context, req.params.id, complete);
         function complete() {
             callbackCount++;
-            if (callbackCount >= 1) {
+            if (callbackCount >= 2) {
                 res.render('updateChar', context);
             }
         }
@@ -59,9 +71,9 @@ module.exports = function(){
 
     router.put('/:id', function (req, res) {
         var mysql = req.app.get('mysql');
-        console.log(req.body)
-        console.log(req.params.id)
-        var sql = "UPDATE People SET FName=?, LName=?, Alias =?, Race =?, HomeLocation=? WHERE character_id=?";
+        console.log(req.body);
+        console.log(req.params.id);
+        var sql = "UPDATE People SET FName=?, LName=?, Alias =?, Race =?, HomeLocation=? WHERE id=?";
         var inserts = [req.body.FName, req.body.LName, req.body.Alias, req.body.Race, req.body.HomeLocation, req.params.id];
         sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
             if (error) {
