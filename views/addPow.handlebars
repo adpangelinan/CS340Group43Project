@@ -7,7 +7,7 @@
         {{#each people}} 
         <tr> 
             <td>{{Name}}</td>
-            <td>{{Power}}</td>
+            <td>{{Powers}}</td>
             <td><button onclick="deletePerson({{ID}})">Delete</button></td>
             <td><a href="/people/{{ID}}">Update</a></td>
         </tr> 
@@ -17,14 +17,14 @@
 <h4>Add a Power:</h4>
 <form id="addpow" action="/addPow" method="post">
     Name: <select type="text" name="Name">
-        {{#each People}}
+        {{#each pep}}
         <option value={{PID}}>{{Name}}</option>
         {{/each}}
         </select><br>
 
     Power: <select type="text" name="Power">
-        {{#each People}}
-        <option value={{PoID}}>{{Power}}</option>
+        {{#each peop}}
+        <option value={{PoID}}>{{Powers}}</option>
         {{/each}}
     </select><br>
     
