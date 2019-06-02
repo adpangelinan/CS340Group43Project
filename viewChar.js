@@ -5,12 +5,13 @@ module.exports = function(){
     function getChars(req,res){
         var mysql = req.app.get('mysql');
         var context = {};
-        mysql.pool.query("SELECT People.ID AS ID, FName, LName, Alias, Region, City, Race FROM People INNER JOIN Locations ON People.HomeLocation=Locations.id",function(err,rows){
+        mysql.pool.query("SELECT People.ID AS ID, FName, LName, Alias, Region, City, Race FROM People INNER JOIN Locations ON People.HomeLocation=Locations.id ORDER BY People.ID ASC",function(err,rows){
             if (err){
                 console.log("error= ");
                 console.log(err);
             } else {
                 context.people = rows;
+                context.jsscripts = ["deleteChar.js"];
                 for (var a=0;a<rows.length;a++){
                     //console.log(rows[a]);
                 }
@@ -86,6 +87,22 @@ module.exports = function(){
             }
         });
     });
+
+    router.delete('/:id', function(req, res){
+        var mysql = req.app.get('mysql');
+        var sql = "DELETE FROM People WHERE ID = ?";
+        var inserts = [req.params.id];
+        sql = mysql.pool.query(sql, inserts, function(error, results, fields){
+            if(error){
+                console.log(error)
+                res.write(JSON.stringify(error));
+                res.status(400);
+                res.end();
+            }else{
+                res.status(202).end();
+            }
+        })
+    })
 
 
 return router;

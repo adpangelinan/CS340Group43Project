@@ -16,7 +16,7 @@
 
 <table>
     <thead> 
-        <th>ID</th>
+        <th style="display:none">ID</th>
         <th>First Name</th> 
         <th>Last Name</th>
         <th>Alias</th> 
@@ -26,13 +26,13 @@
     <tbody>
         {{#each people}} 
         <tr> 
-            <td>{{ID}}</td>
+            <td style="display:none">{{ID}}</td>
             <td>{{FName}}</td> 
             <td>{{LName}}</td> 
             <td>{{Alias}}</td>
             <td>{{Race}}</td> 
             <td>{{City}}, {{Region}}</td>
-            <td><button onclick="deletePerson({{ID}})">Delete</button></td>
+            <td><button onclick="deleteChar({{ID}})">Delete</button></td>
             <td><a href="/viewChar/{{ID}}">Update</a></td>
         </tr> 
         {{/each}} 
