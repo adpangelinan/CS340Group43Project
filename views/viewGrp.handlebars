@@ -1,35 +1,51 @@
-<table>
-    <thead> 
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Locations</title>
+    <link rel="stylesheet" href="database.css">
+</head>
+<body>
+    <div class="topnav">
+        <a href=" /index.html"> Home </a>
+        <a href="/viewChar">View Characters</a>
+        <a href="/addChar"> Add a Character </a>
+        <a href="/viewLoc">Add a Location </a>
+        <a href="/viewGrp"> Add a Group </a>
+        <a href="/viewPow"> Add a Power </a>
+    </div>
+    <table>
+        <thead>
         <th>ID</th>
-        <th>Name</th> 
-        <th>Category</th> 
-        <th>Operational Capacity</th> 
-    </thead> 
-    <tbody>
-        {{#each group}} 
-        <tr> 
-            <td>{{ID}}</td>
-            <td>{{Name}}</td> 
-            <td>{{Category}}</td> 
-            <td>{{OperationalCapacity}}</td> 
-            <td><button onclick="deletePerson({{ID}})">Delete</button></td>
-            <td><a href="/people/{{ID}}">Update</a></td>
-        </tr> 
-        {{/each}} 
-    </tbody> 
-</table> 
-<h4>Add a Location:</h4>
-<form id="addgrp" action="/viewGrp" method="post">
-    Name: <input type="text" name="Name"><br>
-    Category: <select type="text" name="Category">
-        <option>Good</option>
-        <option>Evil</option>
-        <option>Neutal</option>
-    </select>
-    Operational Capacity: <select type="text" name="OperationalCapacity">
-        <option>Local</option>
-        <option>Global</option>
-    </select><br>
-    
-    <input type="submit" value="Submit">
- </form>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Operational Capacity</th>
+        </thead>
+        <tbody>
+            {{#each group}}
+            <tr>
+                <td>{{ID}}</td>
+                <td>{{Name}}</td>
+                <td>{{Category}}</td>
+                <td>{{OperationalCapacity}}</td>
+                <td><button onclick="deletePerson({{ID}})">Delete</button></td>
+                <td><a href="/people/{{ID}}">Update</a></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <h4>Add a Location:</h4>
+    <form id="addgrp" action="/viewGrp" method="post">
+        Name: <input type="text" name="Name"><br>
+        Category: <select type="text" name="Category">
+            <option>Good</option>
+            <option>Evil</option>
+            <option>Neutal</option>
+        </select>
+        Operational Capacity: <select type="text" name="OperationalCapacity">
+            <option>Local</option>
+            <option>Global</option>
+        </select><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>

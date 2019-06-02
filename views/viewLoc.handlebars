@@ -1,24 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Locations</title>
+    <link rel="stylesheet" href="database.css">
+</head>
 <h4>Current Locations:</h4>
+<div class="topnav">
+    <a href=" /index.html"> Home </a>
+    <a href="/viewChar">View Characters</a>
+    <a href="/addChar"> Add a Character </a>
+    <a href="/viewLoc">Add a Location </a>
+    <a href="/viewGrp"> Add a Group </a>
+    <a href="/viewPow"> Add a Power </a>
+</div>
 <table>
-    <thead> 
-        <th>ID</th>
-        <th>Name</th> 
-        <th>City</th> 
-        <th>Region</th>
-        <th>Planet</th>
-    </thead> 
+    <thead>
+    <th>ID</th>
+    <th>Name</th>
+    <th>City</th>
+    <th>Region</th>
+    <th>Planet</th>
+    </thead>
     <tbody>
-        {{#each location}} 
-        <tr> 
+        {{#each location}}
+        <tr>
             <td>{{ID}}</td>
-            <td>{{Name}}</td> 
+            <td>{{Name}}</td>
             <td>{{City}}</td>
-            <td>{{Region}}</td> 
-            <td>{{Planet}}</td> 
-        </tr> 
-        {{/each}} 
-    </tbody> 
-</table> 
+            <td>{{Region}}</td>
+            <td>{{Planet}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
 <h4>Add a Location:</h4>
 <form id="addloc" action="/viewLoc" method="post">
     Name: <input type="text" name="Name"><br>
@@ -26,4 +40,4 @@
     Region: <input type="text" name="Region"><br>
     Planet: <input type="text" name="Planet"><br>
     <input type="submit" value="Submit">
- </form>
+</form>
