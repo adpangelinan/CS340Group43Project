@@ -27,13 +27,13 @@
                 <td>{{Name}}</td>
                 <td>{{Category}}</td>
                 <td>{{OperationalCapacity}}</td>
-                <td><button onclick="deletePerson({{ID}})">Delete</button></td>
-                <td><a href="/people/{{ID}}">Update</a></td>
+                <td><button onclick="deleteGrp({{ID}})">Delete</button></td>
+                <td><a href="/viewGrp/{{ID}}">Update</a></td>
             </tr>
             {{/each}}
         </tbody>
     </table>
-    <h4>Add a Location:</h4>
+    <h4>Add a Group:</h4>
     <form id="addgrp" action="/viewGrp" method="post">
         Name: <input type="text" name="Name"><br>
         Category: <select type="text" name="Category">
