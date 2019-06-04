@@ -9,11 +9,27 @@ function getLocs(req,res){
             console.log(err);
         } else {
             context.location = rows;
+            context.jsscripts = ["updateChar.js"];
             //console.log(rows[0]);
             res.render('viewLoc',context);
             }
     });
-}
+};
+
+function getLocsForUpdate(res,mysql,context,id,complete){
+    var sql = "SELECT Locations.ID AS ID, Name, City, Region,Planet FROM Locations WHERE Locations.ID = ?";
+    var inserts = [id];
+    mysql.pool.query(sql, inserts, function (err, results) {
+        if (err) {
+            console.log("error= ");
+            console.log(err);
+        } else {
+            context.locations = results[0];
+            complete();
+            }
+        });
+};
+
 router.get('/',function(req,res){
     getLocs(req,res);
 });
@@ -33,5 +49,56 @@ router.post('/', function(req, res){
         }
     });
 });
+
+router.get('/:id', function (req, res) {
+    callbackCount = 0;
+    var context = {};
+    context.jsscripts = ["updateChar.js"];
+    var mysql = req.app.get('mysql');
+    getLocsForUpdate(res, mysql, context, req.params.id, complete);
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 1) {
+            res.render('updateLoc', context);
+        }
+    }
+
+
+});
+
+
+router.put('/:id', function (req, res) {
+    var mysql = req.app.get('mysql');
+    console.log(req.body);
+    console.log(req.params.id);
+    var sql = "UPDATE Locations SET Name=?, City=?, Region=?,Planet=? WHERE ID=?";
+    var inserts = [req.body.Name, req.body.City, req.body.Region, req.body.Planet];
+    sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
+        if (error) {
+            console.log(error)
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            res.status(200);
+            res.end();
+        }
+    });
+});
+
+router.delete('/:id', function(req, res){
+    var mysql = req.app.get('mysql');
+    var sql = "DELETE FROM Locations WHERE ID = ?";
+    var inserts = [req.params.id];
+    sql = mysql.pool.query(sql, inserts, function(error, results, fields){
+        if(error){
+            console.log(error)
+            res.write(JSON.stringify(error));
+            res.status(400);
+            res.end();
+        }else{
+            res.status(202).end();
+        }
+    })
+})
 return router;
 }();

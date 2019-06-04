@@ -56,7 +56,7 @@ router.get('/:id', function (req, res) {
     getGrpsForUpdate(res, mysql, context, req.params.id, complete);
     function complete() {
         callbackCount++;
-        if (callbackCount >= 2) {
+        if (callbackCount >= 1) {
             res.render('updateGrp', context);
         }
     }
@@ -69,7 +69,7 @@ router.put('/:id', function (req, res) {
     var mysql = req.app.get('mysql');
     console.log(req.body);
     console.log(req.params.id);
-    var sql = "UPDATE Groups SET Name=?, Category=?, OperationCapacity=? WHERE ID=?";
+    var sql = "UPDATE Groups SET Name=?, Category=?, OperationalCapacity=? WHERE ID=?";
     var inserts = [req.body.Name, req.body.Category, req.body.OperationalCapacity];
     sql = mysql.pool.query(sql, inserts, function (error, results, fields) {
         if (error) {
