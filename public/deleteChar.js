@@ -38,9 +38,19 @@ function deleteLoc(id){
     })
 };
 
+function deleteRival(id1,id2){
+    $.ajax({
+        url: '/viewRivals/' + id1 + '/' + id2,
+        type: 'DELETE',
+        success: function(result){
+            window.location.reload(true);
+        }
+    })
+}
+
 function deleteGrpChar(pepid,grpid){
     $.ajax({
-        url: '/viewGrp/Char/' + pepeid + '/' + grpid,
+        url: '/viewGrp/Char/' + pepid + '/' + grpid,
         type: 'DELETE',
         success: function(result){
             window.location.reload(true);
