@@ -30,24 +30,48 @@ function getLocsForUpdate(res,mysql,context,id,complete){
         });
 };
 
+function dup(req,name,city,region,planet){
+    var mysql = req.app.get('mysql');
+    mysql.pool.query("SELECT Name FROM Locations WHERE Name=? AND City =? AND Region=? AND Planet=?",[name,city,region,planet],function(err,rows){
+        if (err){
+            console.log(err);
+            return 404;
+        } else if (rows.length===0){
+            return 0;
+        } else {
+            return 1;
+        }
+    })
+    return 0;
+}
+
 router.get('/',function(req,res){
     getLocs(req,res);
 });
 router.post('/', function(req, res){
-    console.log(req.body.Name);
-    console.log(req.body);
-    var mysql = req.app.get('mysql');
-    var sql = "INSERT INTO Locations (Name, City, Region, Planet) VALUES (?,?,?,?)";
-    var inserts = [req.body.Name, req.body.City, req.body.Region, req.body.Planet];
-    sql = mysql.pool.query(sql,inserts,function(error, results, fields){
-        if(error){
-            console.log(JSON.stringify(error))
-            res.write(JSON.stringify(error));
-            res.end();
-        } else {
-            res.redirect('/viewLoc');
-        }
-    });
+    var dups = dup(req,req.body.Name,req.body.City, req.body.Region, req.body.Planet);
+    if (req.body.City==="" || req.body.Region==="" || req.body.Planet==="" || req.body.Name===""){
+        alert("Cannot have a blank field.");
+        res.redirect('/viewLoc');
+    } else if (dups){
+        alert("Cannot have all fields the same as another location");
+        res.redirect('/viewLoc');
+    } else {
+        console.log(req.body.Name);
+        console.log(req.body);
+        var mysql = req.app.get('mysql');
+        var sql = "INSERT INTO Locations (Name, City, Region, Planet) VALUES (?,?,?,?)";
+        var inserts = [req.body.Name, req.body.City, req.body.Region, req.body.Planet];
+        sql = mysql.pool.query(sql,inserts,function(error, results, fields){
+            if(error){
+                console.log(JSON.stringify(error))
+                res.write(JSON.stringify(error));
+                res.end();
+            } else {
+                res.redirect('/viewLoc');
+            }
+        });
+    }
 });
 
 router.get('/:id', function (req, res) {
