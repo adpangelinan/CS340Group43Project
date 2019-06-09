@@ -11,12 +11,16 @@ module.exports = function(){
                 console.log(err);
             } else {
                 context.people = rows;
-                context.jsscripts = ["deleteChar.js"];
-                for (var a=0;a<rows.length;a++){
-                    //console.log(rows[a]);
-                }
-                res.render('viewChar',context);
-                }
+                context.jsscripts = ["deleteChar.js","filterChar.js","searchChar.js"];
+                mysql.pool.query("SELECT Name, ID FROM Locations",function(err2,locs){
+                    if (err2){
+                        console.log(err2);
+                    } else {
+                        context.locations = locs;
+                        res.render('viewChar',context);
+                    }
+                });
+            }
         });
     }
 
@@ -47,6 +51,19 @@ module.exports = function(){
         });
     }
 
+    function getCharWithNameLike(req, res, mysql, context, complete) {
+        //sanitize the input as well as include the % character
+         var query = "SELECT People.ID as ID, FName, LName, Alias, Region, City, Race FROM People INNER JOIN Locations ON People.HomeLocation = Locations.ID WHERE People.FName LIKE " + mysql.pool.escape(req.params.s + '%');
+        mysql.pool.query(query, function(error, results, fields){
+              if(error){
+                  res.write(JSON.stringify(error));
+                  res.end();
+              }
+              context.people = results;
+              complete();
+          });
+      }
+
     router.get('/',function(req,res){
         getChars(req,res);
     });
@@ -65,8 +82,21 @@ module.exports = function(){
                 res.render('updateChar', context);
             }
         }
+    });
 
-
+    router.get('/search/:s', function(req, res){
+        var callbackCount = 0;
+        var context = {};
+        context.jsscripts = ["deleteChar.js","filterChar.js","searchChar.js"];
+        var mysql = req.app.get('mysql');
+        getCharWithNameLike(req, res, mysql, context, complete);
+        getLocs(res,mysql,context,0,complete);
+        function complete(){
+            callbackCount++;
+            if(callbackCount >= 2){
+                res.render('viewChar', context);
+            }
+        }
     });
 
 
@@ -87,6 +117,8 @@ module.exports = function(){
             }
         });
     });
+
+    
 
     router.delete('/:id', function(req, res){
         var mysql = req.app.get('mysql');

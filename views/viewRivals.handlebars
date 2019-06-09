@@ -1,0 +1,35 @@
+<table>
+    <thead> 
+        <th>Name</th>
+        <th>Name</th>  
+    </thead> 
+    <tbody>
+        {{#each Rivals}} 
+        <tr> 
+            <td>{{Rival1}}</td>
+            <td>{{Rival2}}</td> 
+            <td><button onclick="deletePerson({{ID}})">Delete</button></td>
+            <td><a href="/people/{{ID}}">Update</a></td>
+        </tr> 
+        {{/each}} 
+    </tbody> 
+</table> 
+<h4>Add Allies or Rivals:</h4>
+<form id="addriv" action="/viewRivals" method="post">
+    Rival #1: <select type="text" name="Rival1">
+        {{#each People}}
+        <option value={{ID}}>{{FName}} {{LName}}</option>
+        {{/each}}
+        </select><br>
+    Rival #2: <select type="text" name="Rival2">
+        {{#each People2}}
+        <option value={{ID}}>{{FName}} {{LName}}</option>
+        {{/each}}
+    </select><br>
+    <select type="text" name="AorE">
+        <option value=0>Enemies</option>
+        <option value=1>Allies</option>
+    </select>
+    
+    <input type="submit" value="Submit">
+ </form>

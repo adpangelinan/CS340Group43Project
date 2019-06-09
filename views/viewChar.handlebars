@@ -13,7 +13,19 @@
     <a href="/viewGrp"> Add a Group </a>
     <a href="/viewPow"> Add a Power </a>
 </div>
-
+Search by First Name:
+<form>
+<input type ="text" id="name_search">
+<input type="submit" value="Submit">
+</form><br>
+Filter by Location:
+<form>
+    <select name="loc_filter">
+        {{#each locations}}
+        <option value="{{ID}}">{{Name}}</option>
+        {{/each}}
+    </select>
+</form>
 <table>
     <thead> 
         <th style="display:none">ID</th>
