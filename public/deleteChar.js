@@ -38,12 +38,22 @@ function deleteLoc(id){
     })
 };
 
-/*function deleteCharPow(id){
+function deleteGrpChar(pepid,grpid){
     $.ajax({
-        url: '/viewChar/' + id,
+        url: '/viewGrp/Char/' + pepeid + '/' + grpid,
         type: 'DELETE',
         success: function(result){
             window.location.reload(true);
         }
     })
-}*/
+}
+
+function deletePowChar(pepid,powid){
+    $.ajax({
+        url: '/viewPow/Char' + pepid + '/' + powid,
+        type: 'DELETE',
+        success: function(result){
+            window.location.reload(true);
+        }
+    })
+}

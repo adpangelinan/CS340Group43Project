@@ -1,0 +1,16 @@
+People who have {{data.Name}}:
+<table>
+        <thead>
+        <th>Name</th>
+        <th>Alias</th>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr>
+                <td>{{FName}} {{LName}}</td>
+                <td>{{Alias}}</td>
+                <td><button onclick="deletePowChar({{pepID}},{{powID}})">Delete</button></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>

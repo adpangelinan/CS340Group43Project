@@ -1,0 +1,16 @@
+Characters in {{data.Name}}:
+<table>
+        <thead>
+        <th>Name</th>
+        <th>Alias</th>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr>
+                <td>{{FName}} {{LName}}</td>
+                <td>{{Alias}}</td>
+                <td><button onclick="deleteGrpChar({{pepID}},{{grpID}})">Delete</button></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>

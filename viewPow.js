@@ -29,6 +29,19 @@ function getPowsForUpdate(res,mysql,context,id,complete){
         });
 };
 
+function getPowsForChar(res,mysql,context,id,complete){
+    var sql = "SELECT FName, LName, Alias, pepID, powID, Name FROM Powers INNER JOIN People_Power ON Powers.ID=powID INNER JOIN People ON pepID=People.ID WHERE Powers.ID=?";
+    var inserts = [id];
+    mysql.pool.query(sql,insert,function(err,rows){
+        if (err){
+            console.log(err);
+        } else {
+            context.data = rows;
+            complete();
+        }
+    })
+}
+
 router.get('/',function(req,res){
     getPows(req,res)
 });
@@ -61,9 +74,21 @@ router.get('/:id', function (req, res) {
             res.render('updatePow', context);
         }
     }
-
-
 });
+
+router.get('/Char/:id',function(req,res){
+    callbackCount = 0;
+    var context = {};
+    context.jsscripts = ["deleteChar.js"];
+    var mysql = req.app.get('mysql');
+    getPowsForChar(res, mysql, context, req.params.id, complete);
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 1) {
+            res.render('viewPowChar', context);
+        }
+    }
+})
 
 
 router.put('/:id', function (req, res) {
@@ -89,6 +114,22 @@ router.delete('/:id', function(req, res){
     var sql = "DELETE FROM Powers WHERE ID = ?";
     var inserts = [req.params.id];
     sql = mysql.pool.query(sql, inserts, function(error, results, fields){
+        if(error){
+            console.log(error)
+            res.write(JSON.stringify(error));
+            res.status(400);
+            res.end();
+        }else{
+            res.status(202).end();
+        }
+    })
+})
+
+router.delete('/Char/:pepid/:powid',function (req,res){
+    var mysql = req.app.get('mysql');
+    var sql = "DELETE FROM People_Power WHERE pepID=? AND powID =?";
+    var inserts = [req.params.pepid,req.params.powid];
+    mysql.pool.query(sql, inserts, function(error, results, fields){
         if(error){
             console.log(error)
             res.write(JSON.stringify(error));

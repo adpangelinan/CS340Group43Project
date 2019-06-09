@@ -29,6 +29,19 @@ function getGrpsForUpdate(res,mysql,context,id,complete){
         });
 };
 
+function getCharByGroup (res,mysql,context,id){
+    var sql = "SELECT FName, LName, Alias, Name, pepID, grpID FROM Groups INNER JOIN People_Group ON Groups.ID=grpID INNER JOIN People ON pepID=People.ID WHERE Groups.ID=?";
+    var inserts = [id];
+    mysql.pool.query(sql,inserts,function(err,rows){
+        if (err){
+            console.log (err);
+        } else {
+            context.data = rows;
+            res.render('viewGrpChar',context);
+        }
+    })
+}
+
 router.get('/',function(req,res){
     getGrps(req,res)
 });
@@ -64,6 +77,14 @@ router.get('/:id', function (req, res) {
 
 });
 
+router.get('/Char/:id',function(req,res){
+    callbackCount = 0;
+    var context = {};
+    context.jsscripts = ["deleteChar.js"];
+    var mysql = req.app.get('mysql');
+    getCharByGroup(res,mysql,context,req.params.id);
+})
+
 
 router.put('/:id', function (req, res) {
     var mysql = req.app.get('mysql');
@@ -94,6 +115,22 @@ router.delete('/:id', function(req, res){
             res.status(400);
             res.end();
         }else{
+            res.status(202).end();
+        }
+    })
+})
+
+router.delete('/Char/:pepid/:grpid',function(req,res){
+    var mysql = req.app.get('mysql');
+    var sql = 'DELETE FROM People_Group WHERE pepID=? AND grpID=?';
+    var inserts = [req.params.pepid,req.params.grpid];
+    mysql.pool.query(sql,inserts,function(err,results){
+        if (err){
+            console.log(err);
+            res.write(JSON.stringify(error));
+            res.status(400);
+            res.end();
+        } else {
             res.status(202).end();
         }
     })
