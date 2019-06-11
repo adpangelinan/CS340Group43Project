@@ -14,17 +14,18 @@
     <a href="/viewPow"> Add a Power </a>
 </div>
 Search by First Name:
-<form>
+<form id="searchChar" action="" method="">
 <input type ="text" id="name_search">
-<input type="submit" value="Submit">
+<input type="button" value="Search" onclick="searchCharByName()">
 </form><br>
 Filter by Location:
-<form>
+<form id="filterLoc" action="" method="">
     <select name="loc_filter">
         {{#each locations}}
         <option value="{{ID}}">{{Name}}</option>
         {{/each}}
     </select>
+    <input type="button" value="Filter" onclick="filterCharByHomeworld()">
 </form>
 <table>
     <thead> 

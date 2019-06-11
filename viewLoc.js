@@ -9,7 +9,7 @@ function getLocs(req,res){
             console.log(err);
         } else {
             context.location = rows;
-            context.jsscripts = ["updateChar.js"];
+            context.jsscripts = ["deleteChar.js","updateChar.js"];
             //console.log(rows[0]);
             res.render('viewLoc',context);
             }
