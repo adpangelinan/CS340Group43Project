@@ -32,10 +32,11 @@ function getPowsForUpdate(res,mysql,context,id,complete){
 function getPowsForChar(res,mysql,context,id,complete){
     var sql = "SELECT FName, LName, Alias, pepID, powID, Name FROM Powers INNER JOIN People_Power ON Powers.ID=powID INNER JOIN People ON pepID=People.ID WHERE Powers.ID=?";
     var inserts = [id];
-    mysql.pool.query(sql,insert,function(err,rows){
+    mysql.pool.query(sql,inserts,function(err,rows){
         if (err){
             console.log(err);
         } else {
+            context.Name = rows[0].Name;
             context.data = rows;
             complete();
         }
