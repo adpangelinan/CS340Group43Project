@@ -1,27 +1,33 @@
+<html>
+<head>
+    <link rel="stylesheet" href="database.css">
+</head>
 People who have {{Name}}:
 <table>
-        <thead>
-        <th>Name</th>
-        <th>Alias</th>
-        </thead>
-        <tbody>
-            {{#each data}}
-            <tr>
-                <td>{{FName}} {{LName}}</td>
-                <td>{{Alias}}</td>
-                <td><button onclick="deletePowChar({{pepID}},{{powID}})">Delete</button></td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
+    <thead>
+    <th>Name</th>
+    <th>Alias</th>
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr>
+            <td>{{FName}} {{LName}}</td>
+            <td>{{Alias}}</td>
+            <td><button onclick="deletePowChar({{pepID}},{{powID}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
     Add Character to this Group:
-    <form id="addpowchar" action="/viewpow/Char" method="post">
-        Alias: <select type="text" name="Alias">
-            {{#each people}}
-            <option value={{ID}}>{{Alias}}</option>
-            {{/each}}
-            </select><br>
-        <input type="hidden" value={{data.powID}} name="powid"></input>
+<form id="addpowchar" action="/viewpow/Char" method="post">
+    Alias: <select type="text" name="Alias">
+        {{#each people}}
+        <option value={{ID}}>{{Alias}}</option>
+        {{/each}}
+    </select><br>
+    <input type="hidden" value={{data.powID}} name="powid"></input>
 
-        <input type="submit" value="Submit">
-    </form>
+    <input type="submit" value="Submit">
+    <button onclick="window.location.href='/viewPow'">Go Back</button>
+</form>
+</html>
