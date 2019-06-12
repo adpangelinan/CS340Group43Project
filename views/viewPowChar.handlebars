@@ -14,3 +14,14 @@ People who have {{Name}}:
             {{/each}}
         </tbody>
     </table>
+    Add Character to this Group:
+    <form id="addpowchar" action="/viewpow/Char" method="post">
+        Alias: <select type="text" name="Alias">
+            {{#each people}}
+            <option value={{ID}}>{{Alias}}</option>
+            {{/each}}
+            </select><br>
+        <input type="hidden" value={{data.powID}} name="powid"></input>
+
+        <input type="submit" value="Submit">
+    </form>

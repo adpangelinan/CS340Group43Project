@@ -37,17 +37,21 @@ function getCharByGroup (res,mysql,context,id){
             console.log (err);
         } else {
             context.data = rows;
+            context.data.grpID = id;
             mysql.pool.query("SELECT Alias, ID, grpID FROM People LEFT JOIN People_Group ON ID=pepID",[id],function(err1,rows1){
                 if (err1){
                     console.log(err1);
                 } else {
-                    var charArr =[];
-                    console.log("Grp ID= " + id);
-                    for (var cc=0;cc<rows1.length;cc++){
-                        console.log("Char: " + rows1[cc].Alias + " Group: " + rows1[cc].grpID);
-                        if (rows1[cc].grpID!=id){
-                            charArr.push(rows1[cc]);
-                            console.log("Pushing " + rows1[cc].Alias);
+                    var spliceArr = [];
+                    var charArr = [];
+                    for (var aa=0;aa<rows1.length;aa++){
+                        if (rows1[aa].grpID==id){
+                            spliceArr.push(rows1[aa].Alias);
+                        }
+                    }
+                    for (var bb=0;bb<rows1.length;bb++){
+                        if (spliceArr.indexOf(rows1[bb].Alias)===-1){
+                            charArr.push(rows1[bb]);
                         }
                     }
                     context.people = charArr;
@@ -104,8 +108,8 @@ router.post('/', function(req, res){
 
 router.post('/Char/',function(req,res){
     var mysql = req.app.get('mysql');
-    var sql = "INSERT INTO People_Groups (pepID, grpID) VALUES (?,?)";
-    var inserts = [req.body.Alias, req.body.grpID];
+    var sql = "INSERT INTO People_Group (pepID, grpID) VALUES (?,?)";
+    var inserts = [req.body.Alias, req.body.grpid];
     sql = mysql.pool.query(sql,inserts,function(error, results, fields){
         if(error){
             console.log(JSON.stringify(error))

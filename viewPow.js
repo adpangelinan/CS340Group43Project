@@ -38,6 +38,31 @@ function getPowsForChar(res,mysql,context,id,complete){
         } else {
             context.Name = rows[0].Name;
             context.data = rows;
+            context.data.powID = id;
+            complete();
+        }
+    })
+}
+
+function getCharsNotInPow(res,mysql,context,id,complete){
+    var sql = "SELECT  Alias, pepID, powID, ID FROM People LEFT JOIN People_Power ON People.ID=pepID";
+    mysql.pool.query(sql,function(err,rows){
+        if (err){
+            console.log(err);
+        } else {
+            var spliceArr = [];
+            var charArr = [];
+            for (var aa=0;aa<rows.length;aa++){
+                if (rows[aa].powID==id){
+                    spliceArr.push(rows[aa].Alias);
+                }
+            }
+            for (var bb=0;bb<rows.length;bb++){
+                if (spliceArr.indexOf(rows[bb].Alias)===-1){
+                    charArr.push(rows[bb]);
+                }
+            }
+            context.people = charArr;
             complete();
         }
     })
@@ -63,6 +88,21 @@ router.post('/', function(req, res){
     });
 });
 
+router.post('/Char/',function(req,res){
+    var mysql = req.app.get('mysql');
+    var sql = "INSERT INTO People_Power (pepID, powID) VALUES (?,?)";
+    var inserts = [req.body.Alias, req.body.powid];
+    sql = mysql.pool.query(sql,inserts,function(error, results, fields){
+        if(error){
+            console.log(JSON.stringify(error))
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            res.redirect('/viewPow');
+        }
+    });
+})
+
 router.get('/:id', function (req, res) {
     callbackCount = 0;
     var context = {};
@@ -83,9 +123,10 @@ router.get('/Char/:id',function(req,res){
     context.jsscripts = ["deleteChar.js"];
     var mysql = req.app.get('mysql');
     getPowsForChar(res, mysql, context, req.params.id, complete);
+    getCharsNotInPow(res, mysql, context, req.params.id, complete);
     function complete() {
         callbackCount++;
-        if (callbackCount >= 1) {
+        if (callbackCount >= 2) {
             res.render('viewPowChar', context);
         }
     }

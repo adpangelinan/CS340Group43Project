@@ -60,7 +60,7 @@ function deleteGrpChar(pepid,grpid){
 
 function deletePowChar(pepid,powid){
     $.ajax({
-        url: '/viewPow/Char' + pepid + '/' + powid,
+        url: '/viewPow/Char' + "/" + pepid + '/' + powid,
         type: 'DELETE',
         success: function(result){
             window.location.reload(true);

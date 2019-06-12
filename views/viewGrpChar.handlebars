@@ -16,12 +16,12 @@ Characters in {{data.Name}}:
     </table>
 Add Character to this Group:
     <form id="addgrpchar" action="/viewGrp/Char" method="post">
-        Alias: <select type="text" value={{pepID}} name="Alias">
+        Alias: <select type="text" name="Alias">
             {{#each people}}
-            <option>{{Alias}}</option>
+            <option value={{ID}}>{{Alias}}</option>
             {{/each}}
             </select><br>
-        <input type="hidden" value={{grpID}} name="grpid">{{grpID}}</input>
+        <input type="hidden" value={{data.grpID}} name="grpid"></input>
 
         <input type="submit" value="Submit">
     </form>
