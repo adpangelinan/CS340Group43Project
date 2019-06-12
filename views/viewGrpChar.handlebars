@@ -14,3 +14,14 @@ Characters in {{data.Name}}:
             {{/each}}
         </tbody>
     </table>
+Add Character to this Group:
+    <form id="addgrpchar" action="/viewGrp/Char" method="post">
+        Alias: <select type="text" value={{pepID}} name="Alias">
+            {{#each people}}
+            <option>{{Alias}}</option>
+            {{/each}}
+            </select><br>
+        <input type="hidden" value={{grpID}} name="grpid">{{grpID}}</input>
+
+        <input type="submit" value="Submit">
+    </form>
