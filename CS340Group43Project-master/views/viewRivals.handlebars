@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Marvel Characters</title>
+    <link rel="stylesheet" href="database.css">
+</head>
+<div class="topnav">
+    <a href=" /index.html"> Home </a>
+    <a href="/viewChar">View Characters</a>
+    <a href="/addChar"> Add a Character </a>
+    <a href="/viewLoc">Add a Location </a>
+    <a href="/viewGrp"> Add a Group </a>
+    <a href="/viewPow"> Add a Power </a>
+    <a href="/viewRivals"> View Rivals</a>
+</div>
+<h3>Relationships</h3>
+<table>
+    <thead>
+    <th>Person 1</th>
+    <th>Person 2</th>
+    <th>Relationship</th>
+    <th>Delete</th>
+    </thead>
+    <tbody>
+        {{#each Rivals}}
+        <tr>
+            <td>{{Rival1}}</td>
+            <td>{{Rival2}}</td>
+            <td>{{AoE}}</td>
+            <td><button onclick="deleteRival({{ID1}},{{ID2}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+<h4>Add Allies or Rivals:</h4>
+<form id="addriv" action="/viewRivals" method="post">
+    Person #1: <select type="text" name="Rival1">
+        {{#each People}}
+        <option value={{ID}}>{{FName}} {{LName}}</option>
+        {{/each}}
+    </select><br>
+    Person #2: <select type="text" name="Rival2">
+        {{#each People2}}
+        <option value={{ID}}>{{FName}} {{LName}}</option>
+        {{/each}}
+    </select><br>
+    <select type="text" name="AorE">
+        <option value=0>Enemies</option>
+        <option value=1>Allies</option>
+    </select>
+
+    <input type="submit" value="Submit">
+</form>
+</html>

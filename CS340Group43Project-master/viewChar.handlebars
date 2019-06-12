@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Marvel Characters</title>
+  <link rel="stylesheet" href ="database.css">
+</head>
+<h3>Marvel Characters</h3>
+<div class="topnav">
+    <a href=" /index.html"> Home </a>
+    <a href="/viewChar">View Characters</a>
+    <a href="/addChar"> Add a Character </a>
+    <a href="/viewLoc">Add a Location </a>
+    <a href="/viewGrp"> Add a Group </a>
+    <a href="/viewPow"> Add a Power </a>
+</div>
+Search by First Name:
+<form>
+<input type ="text" id="name_search">
+<input type="submit" value="Submit">
+</form><br>
+Filter by Location:
+<form>
+    <select name="loc_filter">
+        {{#each locations}}
+        <option value="{{ID}}">{{Name}}</option>
+        {{/each}}
+    </select>
+</form>
+<table>
+    <thead> 
+        <th style="display:none">ID</th>
+        <th>First Name</th> 
+        <th>Last Name</th>
+        <th>Alias</th> 
+        <th>Race</th>
+        <th>Location</th>  
+    </thead> 
+    <tbody>
+        {{#each people}} 
+        <tr> 
+            <td style="display:none">{{ID}}</td>
+            <td>{{FName}}</td> 
+            <td>{{LName}}</td> 
+            <td>{{Alias}}</td>
+            <td>{{Race}}</td> 
+            <td>{{City}}, {{Region}}</td>
+            <td><button onclick="deleteChar({{ID}})">Delete</button></td>
+            <td><a href="/viewChar/{{ID}}">Update</a></td>
+        </tr> 
+        {{/each}} 
+    </tbody> 
+</table> 
+</html>

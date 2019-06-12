@@ -1,0 +1,17 @@
+<html>
+<head>
+    <link rel="stylesheet" href="database.css">
+</head>
+<h3>Update {{powers.Name}}:</h3>
+<form id="update-power" action="/viewPow" method="post">
+    <input type="hidden" value={{powers.ID}} name="id">
+    Name: <input type="text" name="Name" value="{{powers.Name}}"><br>
+    Category: <select type="text" name="Category" value="{{powers.Category}}">
+        <option>Mental</option>
+        <option>Physical</option>
+        <option>Supernatural</option>
+    </select><br>
+</form>
+<button onclick="updatePow({{powers.ID}})">Update</button>
+<button onclick="window.location.href='/viewPow'">Go Back</button>
+</html>

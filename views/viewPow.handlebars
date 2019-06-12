@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Powers</title>
+    <link rel="stylesheet" href="database.css">
+</head>
+<body>
+    <div class="topnav">
+        <a href=" /index.html"> Home </a>
+        <a href="/viewChar">View Characters</a>
+        <a href="/addChar"> Add a Character </a>
+        <a href="/viewLoc">Add a Location </a>
+        <a href="/viewGrp"> Add a Group </a>
+        <a href="/viewPow"> Add a Power </a>
+        <a href="/viewRivals"> View Rivals</a>
+    </div>
+    <h3>SuperPowers</h3>
+    <table>
+        <thead>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Category</th>
+        </thead>
+        <tbody>
+            {{#each power}}
+            <tr>
+                <td>{{ID}}</td>
+                <td>{{Name}}</td>
+                <td>{{Category}}</td>
+                <td><button onclick="deletePow({{ID}})">Delete</button></td>
+                <td><a href="/viewPow/{{ID}}">Update</a></td>
+                <td><a href="/viewPow/Char/{{ID}}">View Character with this power.</a></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <h4>Add a Power:</h4>
+    <form id="addpow" action="/viewPow" method="post">
+        Name: <input type="text" name="Name"><br>
+        Category: <select type="text" name="Category">
+            <option>Mental</option>
+            <option>Physical</option>
+            <option>Supernatural</option>
+        </select><br>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
