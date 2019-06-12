@@ -36,9 +36,17 @@ function getPowsForChar(res,mysql,context,id,complete){
         if (err){
             console.log(err);
         } else {
-            context.Name = rows[0].Name;
-            context.data = rows;
-            context.data.powID = id;
+            if (rows.length>0){
+                console.log(rows);
+                context.Name = rows[0].Name;
+                context.data = rows;
+            } else {
+                mysql.pool.query('SELECT Name FROM Powers WHERE ID=?',[id],function(err1,rows1){
+                    console.log(rows1);
+                    //context.Name= rows1[0].Name;
+                })
+            }
+            context.powID = id;
             complete();
         }
     })
@@ -72,6 +80,10 @@ router.get('/',function(req,res){
     getPows(req,res)
 });
 router.post('/', function(req, res){
+    if (req.body.Name===""){
+        alert("Name cannot be blank.");
+        res.redirect('/addPow');
+    }
     console.log(req.body.Name);
     console.log(req.body);
     var mysql = req.app.get('mysql');
@@ -92,9 +104,10 @@ router.post('/Char/',function(req,res){
     var mysql = req.app.get('mysql');
     var sql = "INSERT INTO People_Power (pepID, powID) VALUES (?,?)";
     var inserts = [req.body.Alias, req.body.powid];
+    console.log("Inserting into People_Power: " + req.body.Alias + " " + req.body.powid);
     sql = mysql.pool.query(sql,inserts,function(error, results, fields){
         if(error){
-            console.log(JSON.stringify(error))
+            console.log(JSON.stringify(error));
             res.write(JSON.stringify(error));
             res.end();
         } else {

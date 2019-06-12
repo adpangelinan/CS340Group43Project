@@ -21,11 +21,11 @@ module.exports = function(){
     }
     router.get('/', function(req,res){
         var mysql = req.app.get('mysql');
-        mysql.pool.query("SELECT FName,LName, ID FROM Allies_Enemies INNER JOIN People ON pepOneID=ID WHERE AorE=0",function(err,riv1Arr){
+        mysql.pool.query("SELECT FName,LName, ID, AorE FROM Allies_Enemies INNER JOIN People ON pepOneID=ID",function(err,riv1Arr){
             if (err){
                 console.log(err);
             } else {
-                mysql.pool.query("SELECT FName,LName, ID FROM Allies_Enemies INNER JOIN People ON pepTwoID=ID WHERE AorE=0",function(err,riv2Arr){
+                mysql.pool.query("SELECT FName,LName, ID FROM Allies_Enemies INNER JOIN People ON pepTwoID=ID",function(err,riv2Arr){
                     if (err){
                         console.log(err);
                     } else {
@@ -45,6 +45,11 @@ module.exports = function(){
                                     rivObj[a].Rival2 = riv2Arr[a].FName + " " + riv2Arr[a].LName;
                                     rivObj[a].ID1 = riv1Arr[a].ID;
                                     rivObj[a].ID2 = riv2Arr[a].ID;
+                                    if (riv1Arr[a].AorE == 1){
+                                        rivObj[a].AoE = "Ally";
+                                    } else {
+                                        rivObj[a].AoE = "Enemy";
+                                    }
                                 }
                                 context.Rivals = rivObj;
                                 res.render('viewRivals',context);

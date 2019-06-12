@@ -68,6 +68,19 @@ module.exports = function(){
         getChars(req,res);
     });
 
+    function filterLocs(req,res,mysql,context,complete){
+        var sql = "SELECT People.ID AS ID, FName, LName, Alias, Region, City, Race FROM People INNER JOIN Locations ON People.HomeLocation = Locations.ID WHERE Locations.ID=?";
+        var insert = [ mysql.pool.escape(parseInt(req.params.f)) ];
+        mysql.pool.query(sql,insert,function(err,rows){
+            if (err){
+                console.log(err);
+            } else {
+                context.people = rows;
+                complete();
+            }
+        })
+    }
+
 
     router.get('/:id', function (req, res) {
         callbackCount = 0;
@@ -98,6 +111,22 @@ module.exports = function(){
             }
         }
     });
+
+    router.get('/filter/:f',function(req,res){
+        console.log("F=" + req.params.f);
+        var callbackCount = 0;
+        var context = {};
+        context.jsscripts = ["deleteChar.js","filterChar.js","searchChar.js"];
+        var mysql = req.app.get('mysql');
+        filterLocs(req, res, mysql, context, complete);
+        getLocs(res,mysql,context,0,complete);
+        function complete(){
+            callbackCount++;
+            if(callbackCount >= 2){
+                res.render('viewChar', context);
+            }
+        }
+    })
 
 
     router.put('/:id', function (req, res) {
