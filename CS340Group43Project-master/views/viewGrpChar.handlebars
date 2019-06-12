@@ -1,0 +1,33 @@
+<html>
+<head>
+    <link rel="stylesheet" href="database.css">
+</head>
+Characters in {{data.Name}}:
+<table>
+    <thead>
+    <th>Name</th>
+    <th>Alias</th>
+    </thead>
+    <tbody>
+        {{#each data}}
+        <tr>
+            <td>{{FName}} {{LName}}</td>
+            <td>{{Alias}}</td>
+            <td><button onclick="deleteGrpChar({{pepID}},{{grpID}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+Add Character to this Group:
+<form id="addgrpchar" action="/viewGrp/Char" method="post">
+    Alias: <select type="text" name="Alias">
+        {{#each people}}
+        <option value={{ID}}>{{Alias}}</option>
+        {{/each}}
+    </select><br>
+    <input type="hidden" value={{data.grpID}} name="grpid"></input>
+
+    <input type="submit" value="Submit">
+    <button onclick="window.location.href='/viewGrp'">Go Back</button>
+</form>
+</html>

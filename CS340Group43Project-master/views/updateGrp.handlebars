@@ -1,0 +1,21 @@
+<html>
+<head>
+    <link rel="stylesheet" href="database.css">
+</head>
+  <h3>Update {{groups.Name}}:</h3>
+  <form id="update-group" action="/viewGrp" method="post">
+        <input type="hidden" value={{groups.ID}} name="id">
+      Name: <input type="text" name="Name" value="{{groups.Name}}"><br>
+      Category: <select type="text" name="Category" value="{{groups.Category}}">
+            <option>Good</option>
+            <option>Evil</option>
+            <option>Neutal</option>
+        </select><br>
+      Operational Capacity: <select type="text" name="OperationalCapacity" value="{{groups.OperationalCapacity}}">
+            <option>Local</option>
+            <option>Global</option>
+        </select><br>
+  </form>
+  <button onclick="updateGrp({{groups.ID}})">Update</button>
+  <button onclick="window.location.href='/viewGrp'">Go Back</button>
+</html>

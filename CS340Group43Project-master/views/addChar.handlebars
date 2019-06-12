@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Add Character</title>
+    <link rel="stylesheet" href="database.css">
+</head>
+<div class="topnav">
+    <a href=" /index.html"> Home </a>
+    <a href="/viewChar">View Characters</a>
+    <a href="/addChar"> Add a Character </a>
+    <a href="/viewLoc">Add a Location </a>
+    <a href="/viewGrp"> Add a Group </a>
+    <a href="/viewPow"> Add a Power </a>
+    <a href="/viewRivals"> View Rivals</a>
+</div>
+<h4>Add a Character:</h4>
+<form id="addperson" action="/addChar" method="post">
+    First name: <input type="text" name="fname"><br>
+    Last name: <input type="text" name="lname"><br>
+    Home Location: <select name="homeLocation">
+        {{#each locations}}
+        <option value="{{ID}}">{{Name}}</option>
+        {{/each}}
+    </select><br>
+    Alias: <input type="text" name="alias"><br>
+    Race: <input type="text" name="race"><br>
+    <input type="submit" value="Submit">
+</form>
+</html>

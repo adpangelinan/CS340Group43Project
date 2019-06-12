@@ -1,0 +1,16 @@
+<html>
+  <h1>Update {{people.FName}} {{people.LName}}:</h1>
+  <form id="update-character" action="/viewChar" method="post">
+        <input type="hidden" value={{people.ID}} name="id">
+      First name: <input type="text" name="FName" value="{{people.FName}}"><br>
+      Last name: <input type="text" name="LName" value="{{people.LName}}"><br>
+      Alias: <input type="text" name="Alias" value="{{people.Alias}}"><br>
+      Race: <input type="text" name="Race" value="{{people.Race}}"><br>
+      Home Location: <select name="HomeLocation">
+          {{#each locations}}
+          <option value="{{id}}">{{name}}</option>
+          {{/each}}
+      </select><br>
+  </form>
+  <button onclick="updateChar({{people.ID}})">Update</button>
+</html>

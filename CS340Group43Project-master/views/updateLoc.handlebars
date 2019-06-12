@@ -1,0 +1,15 @@
+<html>
+<head>
+    <link rel="stylesheet" href="database.css">
+</head>
+  <h3>Update {{locations.Name}}:</h3>
+  <form id="update-location" action="/viewLoc" method="post">
+        <input type="hidden" value={{locations.ID}} name="id">
+      Name: <input type="text" name="Name" value="{{locations.Name}}"><br>
+      City: <input type="text" name="City" value="{{locations.City}}"><br>
+      Region: <input type="text" name="Region" value="{{locations.Region}}"><br>
+      Planet: <input type="text" name="Planet" value="{{locations.Planet}}"><br>
+  </form>
+  <button onclick="updateLoc({{locations.ID}})">Update</button>
+  <button onclick="window.location.href='/viewLoc'">Go Back</button>
+</html>
