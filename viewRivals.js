@@ -21,16 +21,13 @@ module.exports = function(){
     }
     router.get('/', function(req,res){
         var mysql = req.app.get('mysql');
-        mysql.pool.query("SELECT FName,LName, ID, AorE FROM Allies_Enemies INNER JOIN People ON pepOneID=ID",function(err,riv1Arr){
+        mysql.pool.query("SELECT People.FName,People.LName, People.ID,p1.FName AS FName2 ,p1.LName AS LName2,p1.ID AS ID2, AorE FROM Allies_Enemies INNER JOIN People ON pepOneID=People.ID LEFT JOIN People p1 ON pepTwoID=p1.ID",function(err,riv1Arr){
             if (err){
                 console.log(err);
             } else {
-                mysql.pool.query("SELECT FName,LName, ID FROM Allies_Enemies INNER JOIN People ON pepTwoID=ID",function(err,riv2Arr){
-                    if (err){
-                        console.log(err);
-                    } else {
-                        
                         mysql.pool.query("SELECT FName,LName, ID FROM People",function(err,rows){
+                            console.log(riv1Arr);
+                            console.log(riv1Arr.length);
                             if (err){
                                 console.log(err);
                             } else {
@@ -42,9 +39,9 @@ module.exports = function(){
                                 for (var a=0;a<riv1Arr.length;a++){
                                     rivObj[a] = {};
                                     rivObj[a].Rival1 = riv1Arr[a].FName + " " + riv1Arr[a].LName;
-                                    rivObj[a].Rival2 = riv2Arr[a].FName + " " + riv2Arr[a].LName;
+                                    rivObj[a].Rival2 = riv1Arr[a].FName2 + " " + riv1Arr[a].LName2;
                                     rivObj[a].ID1 = riv1Arr[a].ID;
-                                    rivObj[a].ID2 = riv2Arr[a].ID;
+                                    rivObj[a].ID2 = riv1Arr[a].ID2;
                                     if (riv1Arr[a].AorE == 1){
                                         rivObj[a].AoE = "Ally";
                                     } else {
@@ -52,14 +49,14 @@ module.exports = function(){
                                     }
                                 }
                                 context.Rivals = rivObj;
+                                console.log(rivObj);
+                                console.log(rivObj.length);
                                 res.render('viewRivals',context);
                             }
                         });
                     }
                 });
-            } 
-        });
-    });
+            }) 
     router.post('/', function(req, res){
         console.log(req.body);
         var mysql = req.app.get('mysql');
